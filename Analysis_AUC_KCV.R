@@ -482,7 +482,7 @@ dev.off()
 # PLOTS OF THE SURFACES IN THE TERNARY
 ##############################################
  #################################################
-# DEFINE SOME COORDINATES FOR THE PLOTS
+# DEFINE SOME COORDINATES FOR THE SURFACE PLOTS
 #################################################
 
 coord.tern.grillax <- matrix(0,nrow=length(ejex) ,ncol=length(ejey)) 
