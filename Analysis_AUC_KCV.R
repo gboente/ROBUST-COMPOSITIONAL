@@ -383,10 +383,16 @@ plot(mhat.lineal.rob, residuos.lineal.local.rob,
 dev.off()
  
 
-#######################################
-# COMPUTE THE ESTIMATORS IN A GRID
-# OF POINTS
-#######################################
+ 
+################################################################
+# COMPUTE:
+# THE CLASSICAL ESTIMATORS  
+# THE ROBUST ESTIMATORS  
+# THE CLASSICAL ESTIMATORS WITH THE DATA SET WITHOUT OUTLIERS
+# All AT THE DEFINED GRID
+# WE ALSO SAVE THE GRID OF COMPOSITIONAL POINTS CREATED 
+#################################################################
+
  
 largo=50
 
@@ -400,20 +406,10 @@ mhat.lineal.rob.ilr <- matrix(NA, ncol=largo,nrow=largo)
 
 mhat.lineal.cl.ilr.so  <- matrix(NA, ncol=largo,nrow=largo)
 
+data.grilla <- matrix(0,nrow=length(ejex)*length(ejey),ncol=3)
 
 sigmahat.rob.ilr  <- sigmahat.rob
-
-
-################################################################
-# COMPUTE:
-# THE CLASSICAL ESTIMATORS  
-# THE ROBUST ESTIMATORS  
-# THE CLASSICAL ESTIMATORS WITH THE DATA SET WITHOUT OUTLIERS
-# All AT THE DEFINED GRID
-# WE ALSO SAVE THE GRID OF COMPOSITIONAL POINTS CREATED 
-#################################################################
-
-data.grilla <- matrix(0,nrow=length(ejex)*length(ejey),ncol=3) 
+ 
 
 nx <- 0;
  
