@@ -385,7 +385,7 @@ dev.off()
 
  
 ################################################################
-# COMPUTE:
+# TO PLOT THE ESTIMATORS WE COMPUTE:
 # THE CLASSICAL ESTIMATORS  
 # THE ROBUST ESTIMATORS  
 # THE CLASSICAL ESTIMATORS WITH THE DATA SET WITHOUT OUTLIERS
@@ -428,9 +428,7 @@ for(i in 1:length(ejex)){
 	nx <- nx+length(ejey);
 }
 
-####################################
-# SOME PLOTS
-####################################
+ 
 #######################################################
 # PLOTTING THE GRID AND THE DATA COVARIATES
 # IN THE TERNARY
@@ -483,7 +481,64 @@ dev.off()
 ##############################################
 # PLOTS OF THE SURFACES IN THE TERNARY
 ##############################################
+ #################################################
+# DEFINE SOME COORDINATES FOR THE PLOTS
+#################################################
+
+coord.tern.grillax <- matrix(0,nrow=length(ejex) ,ncol=length(ejey)) 
+coord.tern.grillay <- matrix(0,nrow=length(ejex) ,ncol=length(ejey)) 
+
+coordx <- coordy<- rep(NA, length=length(ejex)*length(ejey))
+
+coord.compo.grillax <- coord.compo.grillay<- coord.compo.grillaz<- matrix(NA,nrow=length(ejex),ncol=length(ejey))
  
+
+nx <- 0;
+j <- 1;
+while(j<=length(ejex)){
+	for (k in 1:length(ejey)){
+		punto <- c(ejex[j], ejey[k]);
+		X.pred <- as.vector( unname(ilrInv(punto)))
+		pepe <- as.vector(CoordinatesToXY(X.pred))
+		coord.tern.grillax[j,k] <- pepe[1]
+		coord.tern.grillay[j,k] <- pepe[2]
+
+		coordx[k+nx]<- pepe[1]
+		coordy[k+nx]<-pepe[2]
+
+		coord.compo.grillax[j,k] <- X.pred[1] # PROTEIN 
+		coord.compo.grillay[j,k] <- X.pred[2] # LIPIDS
+		coord.compo.grillaz[j,k] <- X.pred[3] #CARBOHYDRATS
+	}
+	nx <- nx+length(ejey);
+   	j <- j+1;
+}
+
+
+
+ejex_triang<- seq(-4,4,length=50)
+ejey_triang<- seq(-4,4,length=50)
+
+coordx_triang <- coordy_triang<- rep(NA, length=length(ejex)*length(ejey))
+
+nx <- 0;
+j <- 1;
+
+while(j<=length(ejex_triang)){
+	for (k in 1:length(ejey_triang)){
+ 		punto <- c(ejex_triang[j], ejey_triang[k]);
+		X.pred <- as.vector( unname(ilrInv(punto)))
+		pepe <- as.vector(CoordinatesToXY(X.pred))
+ 
+		coordx_triang[k+nx]<- pepe[1]
+		coordy_triang[k+nx]<-pepe[2]
+	}
+	nx <- nx+length(ejey_triang);
+	j <- j+1;
+}
+ 
+ 
+
 
 ######################################################################
 # THIS FUNCTION IS AS movie3d BUT HELPS IN LATEX 
@@ -578,65 +633,7 @@ version))) {
     invisible(convert)
 } 
 
-
-#################################################
-# DEFINE SOME COORDINATES FOR THE PLOTS
-#################################################
-
-coord.tern.grillax <- matrix(0,nrow=length(ejex) ,ncol=length(ejey)) 
-coord.tern.grillay <- matrix(0,nrow=length(ejex) ,ncol=length(ejey)) 
-
-coordx <- coordy<- rep(NA, length=length(ejex)*length(ejey))
-
-coord.compo.grillax <- coord.compo.grillay<- coord.compo.grillaz<- matrix(NA,nrow=length(ejex),ncol=length(ejey))
- 
-
-nx <- 0;
-j <- 1;
-while(j<=length(ejex)){
-	for (k in 1:length(ejey)){
-		punto <- c(ejex[j], ejey[k]);
-		X.pred <- as.vector( unname(ilrInv(punto)))
-		pepe <- as.vector(CoordinatesToXY(X.pred))
-		coord.tern.grillax[j,k] <- pepe[1]
-		coord.tern.grillay[j,k] <- pepe[2]
-
-		coordx[k+nx]<- pepe[1]
-		coordy[k+nx]<-pepe[2]
-
-		coord.compo.grillax[j,k] <- X.pred[1] # PROTEIN 
-		coord.compo.grillay[j,k] <- X.pred[2] # LIPIDS
-		coord.compo.grillaz[j,k] <- X.pred[3] #CARBOHYDRATS
-	}
-	nx <- nx+length(ejey);
-   	j <- j+1;
-}
-
-
-
-ejex_triang<- seq(-4,4,length=50)
-ejey_triang<- seq(-4,4,length=50)
-
-coordx_triang <- coordy_triang<- rep(NA, length=length(ejex)*length(ejey))
-
-nx <- 0;
-j <- 1;
-
-while(j<=length(ejex_triang)){
-	for (k in 1:length(ejey_triang)){
- 		punto <- c(ejex_triang[j], ejey_triang[k]);
-		X.pred <- as.vector( unname(ilrInv(punto)))
-		pepe <- as.vector(CoordinatesToXY(X.pred))
- 
-		coordx_triang[k+nx]<- pepe[1]
-		coordy_triang[k+nx]<-pepe[2]
-	}
-	nx <- nx+length(ejey_triang);
-	j <- j+1;
-}
- 
- 
-  
+   
 ###################################
 # USES library('rgl')
 ##################################
